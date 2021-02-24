@@ -75,5 +75,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tile_Road90
       objectReference: {fileID: 0}
+    - target: {fileID: 2888713595986868528, guid: 4c903ef39c3485949852a0adeef40891, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4c903ef39c3485949852a0adeef40891, type: 3}

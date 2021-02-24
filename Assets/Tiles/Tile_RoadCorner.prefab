@@ -7,6 +7,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1623384006908685052, guid: 1db52315f556e284abf7872f2546e355, type: 3}
+      propertyPath: isPlaceable
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2581405108408588785, guid: 1db52315f556e284abf7872f2546e355, type: 3}
       propertyPath: m_Mesh
       value: 
