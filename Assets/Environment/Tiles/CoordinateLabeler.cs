@@ -4,26 +4,38 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-[ExecuteInEditMode]
-[SelectionBase]
-[RequireComponent(typeof(TextMeshPro))]
+[ExecuteAlways]
+//[RequireComponent(typeof(TextMeshPro))]
 public class CoordinateLabeler : MonoBehaviour
 {
     [SerializeField] Color defaultColor = Color.white;
     [SerializeField] Color blockedColor = Color.gray;
+    [SerializeField] Color exploredColor = Color.yellow;
+    [SerializeField] Color pathColor = new Color(1f, 0.5f, 0f);
 
     TextMeshPro label;
-    Waypoint waypoint;
+    Vector2Int coordinates = new Vector2Int(); 
+    GridManager gridManager;
+
 
     private void Awake()
     {
+        gridManager = FindObjectOfType<GridManager>();
         label = GetComponentInChildren<TextMeshPro>();
-        waypoint = GetComponent<Waypoint>();
+        label.enabled = false;
+        DisplayCoordinates();
     }
 
     void Update()
     {
-        DisplayCoordinates();
+
+        if (!Application.isPlaying)
+        {
+            DisplayCoordinates();
+            label.enabled = true;
+
+        }
+        
         SetLabelColor();
         ToggleColor();
     }
@@ -38,22 +50,36 @@ public class CoordinateLabeler : MonoBehaviour
 
     private void SetLabelColor()
     {
-        if (waypoint.IsPlaceable)
-        {
-            label.color = defaultColor;
-        }
-        else
+        if (gridManager == null) { return; }
+
+        Node node = gridManager.GetNode(coordinates);
+
+        if (node == null) { return; }
+
+        if (!node.isWalkable)
         {
             label.color = blockedColor;
         }
+        else if (node.isPath)
+        {
+            label.color = pathColor;
+        }
+        else if (node.isExplored)
+        {
+            label.color = exploredColor;
+        }
+       /* else
+        {
+            label.color = defaultColor;
+        }*/
+
     }
 
     private void DisplayCoordinates()
     {
-        Vector3 coordinates;
         coordinates.x = Mathf.RoundToInt(transform.position.x / UnityEditor.EditorSnapSettings.move.x);
-        coordinates.z = Mathf.RoundToInt(transform.position.z / UnityEditor.EditorSnapSettings.move.z);
-        string labelText = coordinates.x  + "," + coordinates.z;
+        coordinates.y = Mathf.RoundToInt(transform.position.z / UnityEditor.EditorSnapSettings.move.z);
+        string labelText = coordinates.x  + "," + coordinates.y;
 
         label.text = labelText;    
         gameObject.name = labelText;    //Updates Object Name To Coordinates
