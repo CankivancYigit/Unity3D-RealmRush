@@ -68,10 +68,10 @@ public class CoordinateLabeler : MonoBehaviour
         {
             label.color = exploredColor;
         }
-       /* else
+        else
         {
             label.color = defaultColor;
-        }*/
+        }
 
     }
 
